@@ -4,7 +4,7 @@ export default class TweetService {
     }
 
     async getTweets(username) {
-        const query = username ? `?username = ${username}` : "";
+        let query = username ? `?username=${username}` : "";
         const response = await fetch(`${this.baseURL}/tweets${query}`, {
             method: "GET",
             headers: {"Content-Type": "application/json"},
@@ -17,15 +17,20 @@ export default class TweetService {
     }
 
     async postTweet(text) {
-        const response = await fetch(`${this.baseURL}/tweets`, {
+        const response = await fetch(`${this.baseURL}/tweets/`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({text, username: "kkardd", user: "Kong"}),
+            body: JSON.stringify({
+                text,
+                username: "ellie",
+                name: "Ellie",
+            }),
         });
         const data = await response.json();
         if (response.status !== 201) {
             throw new Error(data.message);
         }
+        console.log(data);
         return data;
     }
 
@@ -35,7 +40,8 @@ export default class TweetService {
             headers: {"Content-Type": "application/json"},
         });
         if (response.status !== 204) {
-            throw new Error();
+            const data = await response.json();
+            throw new Error(data.message);
         }
     }
 
