@@ -38,6 +38,10 @@ export async function updateTweet(req, res) {
 
 export async function deleteTweet(req, res) {
     const id = req.params.id;
-    await tweetRepository.remove(id);
-    res.status(204).json(id);
+    const isRemove = await tweetRepository.remove(id);
+    if (isRemove) {
+        res.status(204).json(id);
+    } else {
+        res.status(404).json({message: `Tweet id(${id}) not Found!`});
+    }
 }

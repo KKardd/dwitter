@@ -16,19 +16,19 @@ let tweets = [
     },
 ];
 
-export function getAll() {
+export async function getAll() {
     return tweets;
 }
 
-export function getAllByUsername(username) {
+export async function getAllByUsername(username) {
     return tweets.filter((item) => item.username === username);
 }
 
-export function getById(id) {
+export async function getById(id) {
     return tweets.find((item) => item.id === id);
 }
 
-export function create(text, name, username) {
+export async function create(text, name, username) {
     const tweet = {
         id: Date.now().toString(),
         text,
@@ -40,7 +40,7 @@ export function create(text, name, username) {
     return tweet;
 }
 
-export function update(id, text) {
+export async function update(id, text) {
     const tweet = tweets.find((user) => user.id === id);
     if (tweet) {
         tweet.text = text;
@@ -48,6 +48,12 @@ export function update(id, text) {
     return tweet;
 }
 
-export function remove(id) {
-    return tweets.filter((item) => item.id !== id);
+export async function remove(id) {
+    const tweet = tweets.find((item) => item.id === id);
+    if (tweet) {
+        tweets = tweets.filter((item) => item.id !== id);
+        return tweets;
+    } else {
+        return false;
+    }
 }
