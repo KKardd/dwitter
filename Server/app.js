@@ -4,6 +4,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import tweetsRouter from "./router/tweets.js";
+import authRouter from "./router/auth.js";
 
 const app = express();
 
@@ -13,8 +14,10 @@ app.use(helmet());
 app.use(morgan("tiny"));
 
 app.use("/tweets", tweetsRouter);
+app.use("/auth", authRouter);
 
 app.use((req, res, next) => {
+    console.log("마지막에 걸러짐");
     res.sendStatus(404);
 });
 
