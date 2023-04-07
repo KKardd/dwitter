@@ -49,7 +49,7 @@ export async function getById(id) {
 
 export async function create(text, userId) {
     const tweet = {
-        id: new Date().toString(),
+        id: Date.now().toString(),
         text,
         createdAt: new Date(),
         userId,
@@ -67,11 +67,6 @@ export async function update(id, text) {
 }
 
 export async function remove(id) {
-    const tweet = tweets.find((tweet) => tweet.id === id);
-    if (tweet) {
-        tweets = tweets.filter((tweet) => tweet.id !== id);
-        return tweets;
-    } else {
-        return false;
-    }
+    tweets = tweets.filter((tweet) => tweet.id !== id);
+    return tweets;
 }
