@@ -7,15 +7,6 @@ const jwtSecretkey = "WSm^6UL75e^XWr%C8*2!K9ICxikvRZ9D";
 const jwtExpriesInDays = "2d";
 const bcryptSaltRounds = 12;
 
-export async function me(req, res, next) {
-    const user = await userRepository.findById(req.userId);
-    console.log(user.username);
-    if (!user) {
-        return res.status(404).json({message: "User not found!"});
-    }
-    return res.status(200).json({username: user.username});
-}
-
 export async function signup(req, res) {
     const {username, password, name, email, url} = req.body;
     const found = await userRepository.findByUsername(username);
@@ -53,4 +44,12 @@ export async function login(req, res) {
 
 function createJwtToken(id) {
     return jwt.sign({id}, jwtSecretkey, {expiresIn: jwtExpriesInDays});
+}
+
+export async function me(req, res, next) {
+    const user = await userRepository.findById(req.userId);
+    if (!user) {
+        return res.status(404).json({message: "User not found!"});
+    }
+    return res.status(200).json({username: user.username});
 }
