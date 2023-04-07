@@ -2,6 +2,7 @@ import express from "express";
 import "express-async-errors";
 import * as authController from "../controller/auth.js";
 import {validate} from "../middleware/validate.js";
+import {isAuth} from "../middleware/auth.js";
 import {body} from "express-validator";
 const router = express.Router();
 
@@ -16,13 +17,6 @@ const validateCredential = [
         .withMessage("password should be at least 5 char"),
     validate,
 ];
-
-// username: "admin",
-//         password: "admin123",
-//         name: "ADMIN",
-//         email: "admin@dwiiter.com",
-//         url: "",
-//         token: secret,
 
 const validatesignup = [
     ...validateCredential,
@@ -39,9 +33,8 @@ const validatesignup = [
         .optional({nullable: true, checkFalsy: true}),
     validate,
 ];
-
 // GET /auth/me
-router.get("/me", authController.getAuth);
+router.get("/me", isAuth, authController.me);
 
 // POST /signup
 router.post("/signup", authController.signup);

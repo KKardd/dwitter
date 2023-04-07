@@ -7,7 +7,14 @@ const jwtSecretkey = "WSm^6UL75e^XWr%C8*2!K9ICxikvRZ9D";
 const jwtExpriesInDays = "2d";
 const bcryptSaltRounds = 12;
 
-export async function getAuth(req, res) {}
+export async function me(req, res, next) {
+    const user = await userRepository.findById(req.userId);
+    console.log(user.username);
+    if (!user) {
+        return res.status(404).json({message: "User not found!"});
+    }
+    return res.status(200).json({username: user.username});
+}
 
 export async function signup(req, res) {
     const {username, password, name, email, url} = req.body;
@@ -26,7 +33,7 @@ export async function signup(req, res) {
         url,
     });
     const token = createJwtToken(userId);
-    res.status(200).json({token, username});
+    res.status(200).json({token, username, userId});
     // res.status(200).json(token, userId);
 }
 

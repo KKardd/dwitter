@@ -10,12 +10,12 @@ let users = [
     },
 ];
 
-export async function getMe() {
-    return user;
-}
-
 export async function findByUsername(username) {
     return users.find((i) => i.username === username);
+}
+
+export async function findById(id) {
+    return users.find((i) => i.id === id);
 }
 
 export async function createUser(user) {
