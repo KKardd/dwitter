@@ -11,15 +11,15 @@ let users = [
         email: "bob@gmail.com",
         url: "",
     },
-    {
-        id: "2",
-        username: "mac",
-        password:
-            "$2a$12$o0fEOgaNkPL/YOXPW7aaS.h9yFGKUsLZDS.dYQ1kToU9lhaX6tUri",
-        name: "Mac",
-        email: "Mac@gmail.com",
-        url: "",
-    },
+    // {
+    //     id: "2",
+    //     username: "mac",
+    //     password:
+    //         "$2a$12$o0fEOgaNkPL/YOXPW7aaS.h9yFGKUsLZDS.dYQ1kToU9lhaX6tUri",
+    //     name: "Mac",
+    //     email: "Mac@gmail.com",
+    //     url: "",
+    // },
 ];
 
 export async function findByUsername(username) {
@@ -32,7 +32,7 @@ export async function findById(id) {
 
 export async function createUser(user) {
     const created = {...user, id: Date.now().toString()};
-    console.log(created);
+    console.log(Date.now().toString());
     users.push(created);
     return created.id;
 }
