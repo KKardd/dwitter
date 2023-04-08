@@ -3,8 +3,12 @@ import "express-async-errors";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import dotenv from "dotenv";
 import tweetsRouter from "./router/tweets.js";
 import authRouter from "./router/auth.js";
+dotenv.config();
+
+console.log(process.env);
 
 const app = express();
 
