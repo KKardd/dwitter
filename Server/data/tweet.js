@@ -13,12 +13,12 @@ let tweets = [
         createdAt: new Date().toString(),
         userId: "1",
     },
-    // {
-    //     id: "2",
-    //     text: "Mac은 맥북을 좋아해",
-    //     createdAt: new Date().toString(),
-    //     userId: "2",
-    // },
+    {
+        id: "3",
+        text: "Mac은 맥북을 좋아해",
+        createdAt: new Date().toString(),
+        userId: "2",
+    },
 ];
 
 export async function getAll() {
