@@ -6,7 +6,8 @@ import morgan from "morgan";
 import tweetsRouter from "./router/tweets.js";
 import authRouter from "./router/auth.js";
 import {config} from "./config.js";
-import {initSocket} from "./connetion/socket.js";
+import {initSocket} from "./connection/socket.js";
+import {db} from "./db/database.js";
 
 const app = express();
 
@@ -27,5 +28,8 @@ app.use((error, req, res, next) => {
     console.log(error);
     res.sendStatus(500);
 });
+// db.getConnection().then((connetion) => {
+//     console.log(connetion);
+// });
 const server = app.listen(config.host.port);
 initSocket(server);

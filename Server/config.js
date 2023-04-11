@@ -20,4 +20,10 @@ export const config = {
     host: {
         port: parseInt(required("HOST_PORT", 8080)),
     },
+    db: {
+        host: required("MYSQL_HOST"),
+        user: required("MYSQL_USER"),
+        database: required("MYSQL_DATABASE"),
+        password: required("MYSQL_PASSWORD"),
+    },
 };
