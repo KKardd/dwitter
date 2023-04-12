@@ -28,8 +28,5 @@ app.use((error, req, res, next) => {
     console.log(error);
     res.sendStatus(500);
 });
-// db.getConnection().then((connetion) => {
-//     console.log(connetion);
-// });
 const server = app.listen(config.host.port);
 initSocket(server);
