@@ -8,9 +8,7 @@ export async function signup(req, res) {
     const {username, password, name, email, url} = req.body;
     const found = await userRepository.findByUsername(username);
     if (found) {
-        return res
-            .status(409)
-            .json({message: `${username} is already exists!`});
+        return res.status(409).json({message: `${username} is already exists!`});
     }
     const hashed = await bcrypt.hash(password, config.bcrypt.saltRounds);
     const userId = await userRepository.createUser({
