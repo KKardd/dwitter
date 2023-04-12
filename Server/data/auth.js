@@ -25,6 +25,6 @@ export async function createUser(user) {
             url,
         ])
         .then((result) => {
-            return result[0].insetId;
+            return result[0].insertId;
         });
 }
