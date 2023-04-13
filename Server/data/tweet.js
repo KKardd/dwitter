@@ -2,7 +2,7 @@ import * as userRepository from "../data/auth.js";
 import {db} from "../db/database.js";
 
 const SELECT_JOIN =
-    "SELECT tw.text, tw.createdAt, tw.userId, tw.id, us.username, us.url FROM tweets as tw JOIN users as us ON tw.userId = us.id";
+    "SELECT tw.id, tw.text, tw.createdAt, tw.userId, us.name, us.username, us.url FROM tweets as tw JOIN users as us ON tw.userId = us.id";
 const ORDER_DESC = "ORDER BY tw.createdAt DESC";
 export async function getAll() {
     return db
