@@ -8,6 +8,7 @@ import authRouter from "./router/auth.js";
 import {config} from "./config.js";
 import {initSocket} from "./connection/socket.js";
 import {connectDb} from "./db/database.js";
+import {appendFile} from "fs";
 
 const app = express();
 
@@ -30,11 +31,13 @@ app.use((error, req, res, next) => {
 });
 
 // mongodb 사용 시
-connectDb().then((db) => {
-    console.log("init!", db);
-    const server = app.listen(config.host.port);
-    initSocket(server);
-});
+connectDb()
+    .then(() => {
+        console.log("init!");
+        const server = app.listen(config.host.port);
+        initSocket(server);
+    })
+    .catch((err) => console.log(err));
 
 // sequelize 사용 시
 // sequelize.sync().then(() => {
