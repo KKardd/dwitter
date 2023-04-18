@@ -4,10 +4,19 @@ import SQ from "sequelize";
 import MongoDb from "mongodb";
 
 // mongodb
+let db;
 export async function connectDb() {
     return MongoDb.MongoClient.connect(config.db.host).then((client) => {
-        return client.db();
+        db = client.db();
     });
+}
+
+export function getUsers() {
+    return db.collection("users");
+}
+
+export function getTweets() {
+    return db.collection("tweets");
 }
 
 // sequelize
