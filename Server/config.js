@@ -28,6 +28,6 @@ export const config = {
         // password: required("MYSQL_PASSWORD"),
 
         // mongodb 사용시
-        host: required("DB_HOST"),
+        host: required("MONGODB_HOST"),
     },
 };
