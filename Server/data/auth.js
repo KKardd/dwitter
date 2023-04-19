@@ -26,6 +26,7 @@ export async function findById(id) {
 export async function createUser(user) {
     return new User(user).save().then((data) => data.id);
 }
+// -----------------------------------------------------------
 
 // Mongodb 사용시
 
@@ -50,6 +51,9 @@ export async function createUser(user) {
 // function mapOptionalUser(user) {
 //     return user ? {...user, id: user._id} : user;
 // }
+// -----------------------------------------------------------
+
+// Sequelize 사용시
 
 // import SQ, {TEXT} from "sequelize";
 // const DateTypes = SQ.DataTypes;
@@ -97,6 +101,7 @@ export async function createUser(user) {
 // export async function createUser(user) {
 //     return User.create(user).then((result) => result.dataValues.id);
 // }
+// -----------------------------------------------------------
 
 // mysql 사용 시
 

@@ -17,6 +17,7 @@ export function useVirtualId(schema) {
     schema.set("toJSON", {virtuals: true});
     schema.set("toObject", {virtuals: true});
 }
+// -----------------------------------------------------------
 
 // mongodb
 let db;
@@ -31,6 +32,7 @@ let db;
 export function getTweets() {
     return db.collection("tweets");
 }
+// -----------------------------------------------------------
 
 // sequelize
 // const {host, user, database, password} = config.db;
@@ -38,6 +40,7 @@ export function getTweets() {
 //     host,
 //     dialect: "mysql",
 // });
+// -----------------------------------------------------------
 
 // mysql
 // const pool = mysql.createPool({
