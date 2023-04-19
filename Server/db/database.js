@@ -2,15 +2,15 @@ import mysql from "mysql2";
 import {config} from "../config.js";
 import SQ from "sequelize";
 import MongoDb from "mongodb";
+import Mongoose from "mongoose";
 
 // mongodb
 let db;
 export async function connectDb() {
-    return MongoDb.MongoClient.connect(config.db.host).then((client) => {
-        db = client.db();
-    });
+    return Mongoose.connect(config.db.host, {});
 }
 
+// Todo Delete
 export function getUsers() {
     return db.collection("users");
 }
