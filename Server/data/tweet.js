@@ -30,7 +30,6 @@ export async function create(text, userId) {
         username,
         url,
     };
-    console.log(tweet);
     return getTweets()
         .insertOne(tweet)
         .then((data) => {
@@ -38,28 +37,14 @@ export async function create(text, userId) {
         });
 }
 
-export async function update(id, text) {
-    return getTweets()
-        .findOneAndUpdate(
-            {_id: new objectId(id)}, //
-            {$set: {text}},
-            {returnDocument: "after"}
-        )
-        .then((result) => result.value)
-        .then(mapOptionalTweet);
-}
+export async function update(id, text) {}
 
-export async function remove(id) {
-    return getTweets().deleteOne({_id: new objectId(id)});
-}
+export async function remove(id) {}
 
 function mapOptionalTweet(tweet) {
     return tweet ? {...tweet, id: tweet._id.toString()} : tweet;
 }
 
-function mapTweets(tweet) {
-    return tweet.map(mapOptionalTweet);
-}
 // const Sequelize = SQ.Sequelize;
 // const DateTypes = SQ.DataTypes;
 
