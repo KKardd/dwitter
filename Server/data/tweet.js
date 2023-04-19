@@ -37,7 +37,16 @@ export async function create(text, userId) {
         });
 }
 
-export async function update(id, text) {}
+export async function update(id, text) {
+    return getTweets()
+        .findOneAndUpdate(
+            {_id: new objectId(id)}, //
+            {$set: {text}},
+            {returnDocument: "after"}
+        )
+        .then((result) => result.value)
+        .then(mapOptionalTweet);
+}
 
 export async function remove(id) {}
 
