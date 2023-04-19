@@ -48,7 +48,9 @@ export async function update(id, text) {
         .then(mapOptionalTweet);
 }
 
-export async function remove(id) {}
+export async function remove(id) {
+    return getTweets().deleteOne({_id: new objectId(id)});
+}
 
 function mapOptionalTweet(tweet) {
     return tweet ? {...tweet, id: tweet._id.toString()} : tweet;
