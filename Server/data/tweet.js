@@ -56,6 +56,10 @@ function mapOptionalTweet(tweet) {
     return tweet ? {...tweet, id: tweet._id.toString()} : tweet;
 }
 
+function mapTweets(tweet) {
+    return tweet.map(mapOptionalTweet);
+}
+
 // const Sequelize = SQ.Sequelize;
 // const DateTypes = SQ.DataTypes;
 
