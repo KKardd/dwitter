@@ -21,9 +21,13 @@ export const config = {
         port: parseInt(required("HOST_PORT", 8080)),
     },
     db: {
-        host: required("MYSQL_HOST"),
-        user: required("MYSQL_USER"),
-        database: required("MYSQL_DATABASE"),
-        password: required("MYSQL_PASSWORD"),
+        // mysql 사용시
+        // host: required("MYSQL_HOST"),
+        // user: required("MYSQL_USER"),
+        // database: required("MYSQL_DATABASE"),
+        // password: required("MYSQL_PASSWORD"),
+
+        // mongodb 사용시
+        host: required("MONGODB_HOST"),
     },
 };

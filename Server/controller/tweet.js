@@ -32,7 +32,10 @@ export async function updateTweet(req, res) {
     if (!tweet) {
         return res.sendStatus(404);
     }
-    if (tweet.userId !== req.userId) {
+    // mongodb 사용시 objectId 값이 같아도 같다고 안해주기 때문에 toString 해줌
+    const reqUserId = req.userId.toString;
+    const reqTweetId = tweet.userId.toString;
+    if (reqUserId !== reqTweetId) {
         return res.sendStatus(403);
     }
     const updated = await tweetRepository.update(id, text);
@@ -45,7 +48,9 @@ export async function deleteTweet(req, res) {
     if (!tweet) {
         return res.sendStatus(404);
     }
-    if (tweet.userId !== req.userId) {
+    const reqUserId = req.userId.toString;
+    const reqTweetId = tweet.userId.toString;
+    if (reqUserId !== reqTweetId) {
         return res.sendStatus(403);
     }
     await tweetRepository.remove(id);

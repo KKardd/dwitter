@@ -7,7 +7,7 @@ import tweetsRouter from "./router/tweets.js";
 import authRouter from "./router/auth.js";
 import {config} from "./config.js";
 import {initSocket} from "./connection/socket.js";
-import {db, sequelize} from "./db/database.js";
+import {connectDb} from "./db/database.js";
 
 const app = express();
 
@@ -29,11 +29,20 @@ app.use((error, req, res, next) => {
     res.sendStatus(500);
 });
 
+// mongodb 사용 시
+connectDb()
+    .then(() => {
+        console.log("init!");
+        const server = app.listen(config.host.port);
+        initSocket(server);
+    })
+    .catch((err) => console.log(err));
+
 // sequelize 사용 시
-sequelize.sync().then(() => {
-    const server = app.listen(config.host.port);
-    initSocket(server);
-});
+// sequelize.sync().then(() => {
+//     const server = app.listen(config.host.port);
+//     initSocket(server);
+// });
 
 // mysql 사용 시
 // const server = app.listen(config.host.port);
