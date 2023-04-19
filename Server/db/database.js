@@ -4,16 +4,29 @@ import SQ from "sequelize";
 import MongoDb from "mongodb";
 import Mongoose from "mongoose";
 
-// mongodb
-let db;
+// Mongoose
+
 export async function connectDb() {
     return Mongoose.connect(config.db.host, {});
 }
 
-// Todo Delete
-export function getUsers() {
-    return db.collection("users");
+export function useVirtualId(schema) {
+    schema.virtual("id").get(function () {
+        return this._id.toString();
+    });
+    schema.set("toJSON", {virtuals: true});
+    schema.set("toObject", {virtuals: true});
 }
+
+// mongodb
+let db;
+// export async function connectDb() {
+//     return Mongoose.connect(config.db.host, {});
+// }
+
+// export function getUsers() {
+//     return db.collection("users");
+// }
 
 export function getTweets() {
     return db.collection("tweets");

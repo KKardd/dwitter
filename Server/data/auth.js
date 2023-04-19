@@ -1,27 +1,55 @@
 // import {db, getUsers, sequelize} from "../db/database.js";
-import {getUsers} from "../db/database.js";
-import MongoDb from "mongodb";
-const objectId = MongoDb.ObjectId;
+// import MongoDb from "mongodb";
+import Mongoose from "mongoose";
+import {useVirtualId} from "../db/database.js";
 
+const userSchema = new Mongoose.Schema({
+    username: {type: String, required: true},
+    name: {type: String, required: true},
+    email: {type: String, required: true},
+    password: {type: String, required: true},
+    url: {type: String},
+});
+
+useVirtualId(userSchema);
+const User = Mongoose.model("User", userSchema);
+
+// mongoose 사용 시
 export async function findByUsername(username) {
-    return getUsers().findOne({username: username}).then(mapOptionalUser);
+    return User.findOne({username});
 }
 
 export async function findById(id) {
-    return getUsers()
-        .findOne({_id: new objectId(id)})
-        .then(mapOptionalUser);
+    return User.findById(id);
 }
 
 export async function createUser(user) {
-    return getUsers()
-        .insertOne(user)
-        .then((data) => data.insertedId.toString());
+    return new User(user).save().then((data) => data.id);
 }
 
-function mapOptionalUser(user) {
-    return user ? {...user, id: user._id} : user;
-}
+// Mongodb 사용시
+
+// const objectId = MongoDb.ObjectId;
+
+// export async function findByUsername(username) {
+//     return getUsers().findOne({username: username}).then(mapOptionalUser);
+// }
+
+// export async function findById(id) {
+//     return getUsers()
+//         .findOne({_id: new objectId(id)})
+//         .then(mapOptionalUser);
+// }
+
+// export async function createUser(user) {
+//     return getUsers()
+//         .insertOne(user)
+//         .then((data) => data.insertedId.toString());
+// }
+
+// function mapOptionalUser(user) {
+//     return user ? {...user, id: user._id} : user;
+// }
 
 // import SQ, {TEXT} from "sequelize";
 // const DateTypes = SQ.DataTypes;
@@ -70,7 +98,7 @@ function mapOptionalUser(user) {
 //     return User.create(user).then((result) => result.dataValues.id);
 // }
 
-// mysql
+// mysql 사용 시
 
 // export async function findByUsername(username) {
 //     return db.execute("SELECT * FROM users WHERE username=?", [username]).then((result) => {
