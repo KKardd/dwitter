@@ -1,68 +1,111 @@
 // import SQ, {TEXT} from "sequelize";
 // import {User} from "./auth.js";
 // import {db, sequelize} from "../db/database.js";
-import MongoDb, {ObjectId} from "mongodb";
-import {getTweets} from "../db/database.js";
-import {findById} from "./auth.js";
+// import MongoDb, {ObjectId} from "mongodb";
+// import {getTweets} from "../db/database.js";
+
+import Mongoose from "mongoose";
+import {useVirtualId} from "../db/database.js";
+import * as userRepository from "./auth.js";
+
+const tweetSchema = new Mongoose.Schema(
+    {
+        text: {type: String, required: true},
+        userId: {type: String, required: true},
+        name: {type: String, required: true},
+        username: {type: String, required: true},
+        url: String,
+    },
+    {timestamps: true}
+);
+
+useVirtualId(tweetSchema);
+const Tweet = Mongoose.model("Tweet", tweetSchema);
+
+export async function getAll() {
+    return Tweet.find().sort({createdAt: -1});
+}
+
+export async function getAllByUsername(username) {
+    return Tweet.find({username}).sort({createdAt: -1});
+}
+
+export async function getById(id) {
+    return Tweet.findById(id);
+}
+
+export async function create(text, userId) {
+    return userRepository
+        .findById(userId)
+        .then((user) => new Tweet({text, userId, name: user.name, username: user.username}).save());
+}
+
+export async function update(id, text) {
+    return Tweet.findByIdAndUpdate(id, {text}, {returnOriginal: false});
+}
+
+export async function remove(id) {
+    return Tweet.findByIdAndDelete(id);
+}
 
 // -----------------------------------------------------------
 
 // mongodb 사용 시
-const objectId = MongoDb.ObjectId;
+// const objectId = MongoDb.ObjectId;
 
-export async function getAll() {
-    return getTweets().find().sort({createdAt: -1}).toArray().then(mapTweets);
-}
+// export async function getAll() {
+//     return getTweets().find().sort({createdAt: -1}).toArray().then(mapTweets);
+// }
 
-export async function getAllByUsername(username) {
-    return getTweets().find({username}).sort({createdAt: -1}).toArray().then(mapTweets);
-}
+// export async function getAllByUsername(username) {
+//     return getTweets().find({username}).sort({createdAt: -1}).toArray().then(mapTweets);
+// }
 
-export async function getById(id) {
-    return getTweets()
-        .findOne({_id: new objectId(id)})
-        .then(mapOptionalTweet);
-}
+// export async function getById(id) {
+//     return getTweets()
+//         .findOne({_id: new objectId(id)})
+//         .then(mapOptionalTweet);
+// }
 
-export async function create(text, userId) {
-    const {name, username, url} = await findById(userId);
-    const tweet = {
-        text,
-        createdAt: new Date(),
-        userId,
-        name,
-        username,
-        url,
-    };
-    return getTweets()
-        .insertOne(tweet)
-        .then((data) => {
-            return mapOptionalTweet({...tweet, _id: data.insertedId});
-        });
-}
+// export async function create(text, userId) {
+//     const {name, username, url} = await findById(userId);
+//     const tweet = {
+//         text,
+//         createdAt: new Date(),
+//         userId,
+//         name,
+//         username,
+//         url,
+//     };
+//     return getTweets()
+//         .insertOne(tweet)
+//         .then((data) => {
+//             return mapOptionalTweet({...tweet, _id: data.insertedId});
+//         });
+// }
 
-export async function update(id, text) {
-    return getTweets()
-        .findOneAndUpdate(
-            {_id: new objectId(id)}, //
-            {$set: {text}},
-            {returnDocument: "after"}
-        )
-        .then((result) => result.value)
-        .then(mapOptionalTweet);
-}
+// export async function update(id, text) {
+//     return getTweets()
+//         .findOneAndUpdate(
+//             {_id: new objectId(id)}, //
+//             {$set: {text}},
+//             {returnDocument: "after"}
+//         )
+//         .then((result) => result.value)
+//         .then(mapOptionalTweet);
+// }
 
-export async function remove(id) {
-    return getTweets().deleteOne({_id: new objectId(id)});
-}
+// export async function remove(id) {
+//     return getTweets().deleteOne({_id: new objectId(id)});
+// }
 
-function mapOptionalTweet(tweet) {
-    return tweet ? {...tweet, id: tweet._id.toString()} : tweet;
-}
+// function mapOptionalTweet(tweet) {
+//     return tweet ? {...tweet, id: tweet._id.toString()} : tweet;
+// }
 
-function mapTweets(tweet) {
-    return tweet.map(mapOptionalTweet);
-}
+// function mapTweets(tweet) {
+//     return tweet.map(mapOptionalTweet);
+// }
 // -----------------------------------------------------------
 
 // Sequelize 사용 시
