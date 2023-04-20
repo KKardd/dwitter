@@ -4,6 +4,8 @@
 // import MongoDb, {ObjectId} from "mongodb";
 // import {getTweets} from "../db/database.js";
 
+// mongoose 사용 시
+
 import Mongoose from "mongoose";
 import {useVirtualId} from "../db/database.js";
 import * as userRepository from "./auth.js";
