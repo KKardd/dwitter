@@ -3,6 +3,56 @@ import {db, sequelize} from "../db/database.js";
 // import Mongoose from "mongoose";
 // import {useVirtualId} from "../db/database.js";
 
+// Sequelize 사용시
+
+import SQ, {TEXT} from "sequelize";
+const DateTypes = SQ.DataTypes;
+
+export const User = sequelize.define(
+    "user",
+    {
+        id: {
+            type: DateTypes.INTEGER,
+            autoIncrement: true,
+            allowNull: false,
+            primaryKey: true,
+        },
+        username: {
+            type: DateTypes.STRING(128),
+            allowNull: false,
+        },
+        password: {
+            type: DateTypes.STRING(128),
+            allowNull: false,
+        },
+        name: {
+            type: DateTypes.STRING(128),
+            allowNull: false,
+        },
+        email: {
+            type: DateTypes.STRING(128),
+            allowNull: false,
+        },
+        url: {
+            type: DateTypes.TEXT,
+        },
+    },
+    {timestamps: false}
+);
+
+export async function findByUsername(username) {
+    return User.findOne({where: {username: username}});
+}
+
+export async function findById(id) {
+    return User.findByPk(id);
+}
+
+export async function createUser(user) {
+    return User.create(user).then((result) => result.dataValues.id);
+}
+// -----------------------------------------------------------
+
 // mongoose 사용 시
 
 // const userSchema = new Mongoose.Schema({
@@ -52,56 +102,6 @@ import {db, sequelize} from "../db/database.js";
 // function mapOptionalUser(user) {
 //     return user ? {...user, id: user._id} : user;
 // }
-// -----------------------------------------------------------
-
-// Sequelize 사용시
-
-import SQ, {TEXT} from "sequelize";
-const DateTypes = SQ.DataTypes;
-
-export const User = sequelize.define(
-    "user",
-    {
-        id: {
-            type: DateTypes.INTEGER,
-            autoIncrement: true,
-            allowNull: false,
-            primaryKey: true,
-        },
-        username: {
-            type: DateTypes.STRING(128),
-            allowNull: false,
-        },
-        password: {
-            type: DateTypes.STRING(128),
-            allowNull: false,
-        },
-        name: {
-            type: DateTypes.STRING(128),
-            allowNull: false,
-        },
-        email: {
-            type: DateTypes.STRING(128),
-            allowNull: false,
-        },
-        url: {
-            type: DateTypes.TEXT,
-        },
-    },
-    {timestamps: false}
-);
-
-export async function findByUsername(username) {
-    return User.findOne({where: {username: username}});
-}
-
-export async function findById(id) {
-    return User.findByPk(id);
-}
-
-export async function createUser(user) {
-    return User.create(user).then((result) => result.dataValues.id);
-}
 // -----------------------------------------------------------
 
 // mysql 사용 시

@@ -4,19 +4,24 @@ import SQ from "sequelize";
 import MongoDb from "mongodb";
 import Mongoose from "mongoose";
 
-// Mongoose
+// sequelize
+const {host, user, database, password} = config.db;
+export const sequelize = new SQ.Sequelize(database, user, password, {
+    host,
+    dialect: "mysql",
+});
+// -----------------------------------------------------------
 
-// export async function connectDb() {
-//     return Mongoose.connect(config.db.host, {});
-// }
+// mysql
+const pool = mysql.createPool({
+    host: config.db.host,
+    user: config.db.user,
+    database: config.db.database,
+    password: config.db.password,
+});
 
-// export function useVirtualId(schema) {
-//     schema.virtual("id").get(function () {
-//         return this._id.toString();
-//     });
-//     schema.set("toJSON", {virtuals: true});
-//     schema.set("toObject", {virtuals: true});
-// }
+export const db = pool.promise();
+
 // -----------------------------------------------------------
 
 // mongodb
@@ -34,20 +39,17 @@ import Mongoose from "mongoose";
 // }
 // -----------------------------------------------------------
 
-// sequelize
-const {host, user, database, password} = config.db;
-export const sequelize = new SQ.Sequelize(database, user, password, {
-    host,
-    dialect: "mysql",
-});
+// Mongoose
+
+// export async function connectDb() {
+//     return Mongoose.connect(config.db.host, {});
+// }
+
+// export function useVirtualId(schema) {
+//     schema.virtual("id").get(function () {
+//         return this._id.toString();
+//     });
+//     schema.set("toJSON", {virtuals: true});
+//     schema.set("toObject", {virtuals: true});
+// }
 // -----------------------------------------------------------
-
-mysql;
-const pool = mysql.createPool({
-    host: config.db.host,
-    user: config.db.user,
-    database: config.db.database,
-    password: config.db.password,
-});
-
-export const db = pool.promise();
