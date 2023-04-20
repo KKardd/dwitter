@@ -6,13 +6,7 @@ import {isAuth} from "../middleware/auth.js";
 import {body} from "express-validator";
 const router = express.Router();
 
-const validateTweet = [
-    body("text")
-        .trim()
-        .isLength({min: 3})
-        .withMessage("text should be at least 3 char"),
-    validate,
-];
+const validateTweet = [body("text").trim().isLength({min: 3}).withMessage("text should be at least 3 char"), validate];
 
 // GET /tweets
 // GET /tweets?username=:username

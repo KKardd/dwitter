@@ -3,6 +3,8 @@
 import Mongoose from "mongoose";
 import {useVirtualId} from "../db/database.js";
 
+// mongoose 사용 시
+
 const userSchema = new Mongoose.Schema({
     username: {type: String, required: true},
     name: {type: String, required: true},
@@ -14,7 +16,6 @@ const userSchema = new Mongoose.Schema({
 useVirtualId(userSchema);
 const User = Mongoose.model("User", userSchema);
 
-// mongoose 사용 시
 export async function findByUsername(username) {
     return User.findOne({username});
 }
