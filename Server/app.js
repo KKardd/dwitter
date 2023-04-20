@@ -5,14 +5,19 @@ import helmet from "helmet";
 import morgan from "morgan";
 import tweetsRouter from "./router/tweets.js";
 import authRouter from "./router/auth.js";
+import {sequelize} from "./db/database.js";
 import {config} from "./config.js";
 import {initSocket} from "./connection/socket.js";
-import {connectDb} from "./db/database.js";
 
 const app = express();
 
+const corsOption = {
+    origin: config.cors.allowedOrigin,
+    optionsSuccessStatus: 200,
+};
+
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOption));
 app.use(helmet());
 app.use(morgan("tiny"));
 
@@ -30,19 +35,19 @@ app.use((error, req, res, next) => {
 });
 
 // mongodb 사용 시
-connectDb()
-    .then(() => {
-        console.log("init!");
-        const server = app.listen(config.host.port);
-        initSocket(server);
-    })
-    .catch((err) => console.log(err));
+// connectDb()
+//     .then(() => {
+//         console.log("init!");
+//         const server = app.listen(config.host.port);
+//         initSocket(server);
+//     })
+//     .catch((err) => console.log(err));
 
 // sequelize 사용 시
-// sequelize.sync().then(() => {
-//     const server = app.listen(config.host.port);
-//     initSocket(server);
-// });
+sequelize.sync().then(() => {
+    const server = app.listen(config.port);
+    initSocket(server);
+});
 
 // mysql 사용 시
 // const server = app.listen(config.host.port);
