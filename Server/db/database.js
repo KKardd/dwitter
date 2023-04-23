@@ -8,7 +8,14 @@ import Mongoose from "mongoose";
 const {host, user, database, password} = config.db;
 export const sequelize = new SQ.Sequelize(database, user, password, {
     host,
-    dialect: "mysql",
+    dialect: "postgres",
+    logging: false,
+    dialectOptions: {
+        ss: {
+            require: true,
+            rejectUnauthorized: false,
+        },
+    },
 });
 // -----------------------------------------------------------
 
