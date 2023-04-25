@@ -3,8 +3,6 @@ dotenv.config();
 
 function required(key, defalutValue = undefined) {
     const value = process.env[key] || defalutValue;
-
-    console.log(value);
     if (value == null) {
         throw new Error(`key ${key} is undefined!`);
     }
@@ -40,4 +38,3 @@ export const config = {
         allowedOrigin: required("CORS_ALLOW_ORIGIN"),
     },
 };
-console.log(config.cors.allowedOrigin);

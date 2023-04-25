@@ -45,10 +45,11 @@ app.use((error, req, res, next) => {
 
 // sequelize 사용 시
 sequelize.sync().then(() => {
+    console.log("init Server!");
     const server = app.listen(config.db.port);
     initSocket(server);
 });
-
+//
 // mysql 사용 시
 // const server = app.listen(config.host.port);
 // initSocket(server);
