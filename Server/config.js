@@ -3,6 +3,8 @@ dotenv.config();
 
 function required(key, defalutValue = undefined) {
     const value = process.env[key] || defalutValue;
+
+    console.log(value);
     if (value == null) {
         throw new Error(`key ${key} is undefined!`);
     }
@@ -17,15 +19,19 @@ export const config = {
     bcrypt: {
         saltRounds: parseInt(required("BCRYPT_SALT_ROUNDS", 12)),
     },
-    port: parseInt(required("PORT", 8080)),
+    // port: parseInt(required("PORT", 8080)),
 
     db: {
         // mysql 사용시
-        host: required("MYSQL_HOST"),
-        user: required("MYSQL_USER"),
-        database: required("MYSQL_DATABASE"),
-        password: required("MYSQL_PASSWORD"),
-
+        // host: required("MYSQL_HOST"),
+        // user: required("MYSQL_USER"),
+        // database: required("MYSQL_DATABASE"),
+        // password: required("MYSQL_PASSWORD"),
+        host: required("DB_HOST"),
+        user: required("DB_USER"),
+        database: required("DB_DATABASE"),
+        password: required("DB_PASSWORD"),
+        port: required("DB_PORT"),
         // mongodb 사용시
         // host: required("MONGODB_HOST"),
     },
@@ -34,3 +40,4 @@ export const config = {
         allowedOrigin: required("CORS_ALLOW_ORIGIN"),
     },
 };
+console.log(config.cors.allowedOrigin);

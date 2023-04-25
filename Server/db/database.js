@@ -5,13 +5,14 @@ import MongoDb from "mongodb";
 import Mongoose from "mongoose";
 
 // sequelize
-const {host, user, database, password} = config.db;
+const {host, port, user, database, password} = config.db;
 export const sequelize = new SQ.Sequelize(database, user, password, {
     host,
+    port,
     dialect: "postgres",
     logging: false,
     dialectOptions: {
-        ss: {
+        ssl: {
             require: true,
             rejectUnauthorized: false,
         },

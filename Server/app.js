@@ -45,7 +45,7 @@ app.use((error, req, res, next) => {
 
 // sequelize 사용 시
 sequelize.sync().then(() => {
-    const server = app.listen(config.port);
+    const server = app.listen(config.db.port);
     initSocket(server);
 });
 
