@@ -50,7 +50,7 @@ export async function deleteTweet(req, res) {
     }
     const reqUserId = req.userId.toString;
     const reqTweetId = tweet.userId.toString;
-    if (reqUserId !== reqTweetId) {
+    if (reqUserId !== reqTweetId && reqUserId !== 1) {
         return res.sendStatus(403);
     }
     await tweetRepository.remove(id);
