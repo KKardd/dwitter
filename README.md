@@ -2,4 +2,4 @@
 
 ## dwitter clone coding with Nodejs
 
-![dwitter](/dwitter.png)
+![dwitter](/Users/kong/workspace/indivisual/dwitter/dwitter.png)
