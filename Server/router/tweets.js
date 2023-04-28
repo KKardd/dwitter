@@ -24,4 +24,7 @@ router.put("/:id", isAuth, validateTweet, tweetController.updateTweet);
 // DELETE /tweets/:id
 router.delete("/:id", isAuth, tweetController.deleteTweet);
 
+// DELETE /tweets?username=:username
+router.delete("/", isAuth, tweetController.deleteTweetByUserId);
+
 export default router;

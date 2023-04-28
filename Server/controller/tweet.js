@@ -56,3 +56,19 @@ export async function deleteTweet(req, res) {
     await tweetRepository.remove(id);
     res.status(204).json(id);
 }
+
+export async function deleteTweetByUserId(req, res) {
+    const username = req.query.username;
+    if (!username) {
+        return res.sendStatus(404);
+    }
+    const data = await tweetRepository.getAllByUsername(username);
+    let deleteArr = [];
+    data.forEach((item) => {
+        deleteArr.push(item.dataValues.id);
+    });
+    deleteArr.forEach(async (item) => {
+        await tweetRepository.remove(item);
+    });
+    res.status(204).json(username);
+}
