@@ -53,4 +53,3 @@ sequelize.sync().then(() => {
 // mysql 사용 시
 // const server = app.listen(config.host.port);
 // initSocket(server);
-//

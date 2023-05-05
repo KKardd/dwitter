@@ -1,34 +1,26 @@
 import mysql from "mysql2";
-import {config} from "../config.js";
 import SQ from "sequelize";
-import MongoDb from "mongodb";
-import Mongoose from "mongoose";
+import {config} from "../config.js";
 
 // sequelize
-const {host, port, user, database, password} = config.db;
+
+const {host, user, database, password} = config.db;
 export const sequelize = new SQ.Sequelize(database, user, password, {
     host,
-    port,
-    dialect: "postgres",
+    dialect: "mysql",
     logging: false,
-    dialectOptions: {
-        ssl: {
-            require: true,
-            rejectUnauthorized: false,
-        },
-    },
 });
 // -----------------------------------------------------------
 
-// mysql
-const pool = mysql.createPool({
-    host: config.db.host,
-    user: config.db.user,
-    database: config.db.database,
-    password: config.db.password,
-});
+// // mysql
+// const pool = mysql.createPool({
+//     host: config.db.host,
+//     user: config.db.user,
+//     database: config.db.database,
+//     password: config.db.password,
+// });
 
-export const db = pool.promise();
+// export const db = pool.promise();
 
 // -----------------------------------------------------------
 
