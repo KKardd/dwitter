@@ -12,15 +12,15 @@ export const sequelize = new SQ.Sequelize(database, user, password, {
 });
 // -----------------------------------------------------------
 
-// // mysql
-// const pool = mysql.createPool({
-//     host: config.db.host,
-//     user: config.db.user,
-//     database: config.db.database,
-//     password: config.db.password,
-// });
+// mysql
+const pool = mysql.createPool({
+    host: config.db.host,
+    user: config.db.user,
+    database: config.db.database,
+    password: config.db.password,
+});
 
-// export const db = pool.promise();
+export const db = pool.promise();
 
 // -----------------------------------------------------------
 
